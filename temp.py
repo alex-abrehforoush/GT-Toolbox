@@ -5,6 +5,6 @@ def main():
     func = st.inputCharacteristicFunction(n)
     perm = st.getPermutation(n)
     for i in range(1, n + 1):
-        print(st.calcShapleyValue(perm, func, i))
+        print("Player " + str(i) +"'s share: "+ str(st.calcShapleyValue(perm, func, i)))
 
 main()

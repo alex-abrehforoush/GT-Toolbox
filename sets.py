@@ -21,37 +21,39 @@ def inputCharacteristicFunction(n):
     return func
 
 def sortSet(strf):
-    sarr = strf.split(", ")[1:-1]
+    sarr = strf.split(", ")
     narr = []
     for i in sarr:
-        narr.append(int(i))
+        if i != '':
+            narr.append(int(i))
     narr.sort()
     nsarr = ""
     for i in narr:
-        nsarr = nsarr + ", " + str(i)
+        if i != '':
+            nsarr = nsarr + ", " + str(i)
     return nsarr
 
 def calcAddedValue(strf, i, func):
     val = 0
-    key_old = "{"
-    key_new = "{"
+    key_old = ""
+    key_new = ""
     if strf.find(str(i)) != -1:
-        key_new = key_new + strf[2: strf.find(str(i)) + len(str(i))]
-        key_old = key_old + strf[2: strf.find(str(i)) - 2]
-        key_old = key_old + "}"
-        key_new = key_new + "}"
-        val = func.get(key_new) - func.get(key_old)
+        key_new = key_new + strf[0: strf.find(str(i)) + len(str(i))]
+        key_old = key_old + strf[0: strf.find(str(i)) - 2]
+        x = "{" + sortSet(key_new)[2:] + "}"
+        y = "{" + sortSet(key_old)[2:] + "}"
+        val = func.get(x) - func.get(y)
     return val
 
 def getPermutation(n):
     l = list(permutations(range(1, n + 1)))
     perm = []
     for i in l:
-        perm.append(str(i))
+        perm.append(", " + str(i)[1:-1])
     return perm
 
 def calcShapleyValue(perm, func, i):
     value = 0
     for j in perm:
-        value = value + calcAddedValue(sortSet(j), i, func)
+        value = value + calcAddedValue(j, i, func)
     return value / len(perm)
