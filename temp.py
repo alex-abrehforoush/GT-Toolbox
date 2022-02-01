@@ -1,10 +1,16 @@
-import sets as st
+from sympy import Symbol
+from sympy import Poly
+from sympy.solvers.inequalities import solve_rational_inequalities, solve_poly_inequalities
 
-def main():
-    n = int(input("Enter number of players: "))
-    func = st.inputCharacteristicFunction(n)
-    perm = st.getPermutation(n)
-    for i in range(1, n + 1):
-        print("Player " + str(i) +"'s share: "+ str(st.calcShapleyValue(perm, func, i)))
 
-main()
+x = Symbol('x', real=True)
+y = Symbol('y', real=True)
+z = Symbol('z', real=True)
+w = solve_poly_inequalities((
+    (Poly(x+y+z-8), "="),
+    (Poly(x-1), ">="),
+    (Poly(y), ">="),
+    (Poly(z-1), ">=")
+    ))
+
+print(w)
